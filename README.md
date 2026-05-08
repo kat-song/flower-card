@@ -7,13 +7,6 @@ A customizable, interactive pop-up that cycles through images when a button is c
 
 This project creates a stylized pop-up window that displays a series of images. Each time the user clicks the button, the image changes to the next one in sequence. When the last image is reached, the button disappears and a final message is displayed.
 
-## What you'll learn
-
-* CSS Variables for easy customization
-* Basic HTML flex structure
-* JavaScript event handling
-* DOM manipulation
-
 ## Features
 
 - Customizable colors, fonts, and styling through CSS variables
@@ -21,6 +14,17 @@ This project creates a stylized pop-up window that displays a series of images. 
 - Smooth fade transitions between images
 - Mobile-responsive design
 - Decorative UI elements (close and shrink buttons)
+- CSS Variables for easy customization
+- Basic HTML flex structure
+- JavaScript event handling
+- DOM manipulation
+
+## To do:
+* change background pic
+* change flower 
+* add letter: on the last click, an envelope appears with a red stamp, and when you click on it it unseals and a paper half appears sticking out of it. When you click the paper a pop-up window (not an actual pop up but just the visual effect) with a scroll bar appears, and lets you read the text of the letter. 
+* update background w pics of mom in a pixelated frame every click also 
+* turn cursor into a butterfly 
 
 ## 📁 Project Structure
 

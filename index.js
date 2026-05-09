@@ -36,12 +36,13 @@ let currentIndex = 0;
 
 // Envelope animation frames
 const envelopeFrames = [
-  './assets/envelope_animation/envelope animation0.png',
-  './assets/envelope_animation/envelope animation1.png',
-  './assets/envelope_animation/envelope animation2.png',
-  './assets/envelope_animation/envelope animation3.png',
-  './assets/envelope_animation/envelope animation4.png',
-  './assets/envelope_animation/envelope animation5.png'
+  './assets/envelope_animation/sprite_0.png',
+  './assets/envelope_animation/sprite_1.png',
+  './assets/envelope_animation/sprite_2.png',
+  './assets/envelope_animation/sprite_3.png',
+  './assets/envelope_animation/sprite_4.png',
+  './assets/envelope_animation/sprite_5.png',
+  './assets/envelope_animation/sprite_6.png',
 ];
 
 let isEnvelopeOpen = false;
@@ -79,14 +80,9 @@ updateImage();
 // =============================================
 // Play envelope animation after final image
 function playEnvelopeAnimation() {
-  // Fade out the flower/bunny image
-  imageContent.style.opacity = 0;
-  
-  // After fade out, hide image and show envelope
-  setTimeout(() => {
-    imageContent.style.display = 'none';
-    envelopeContainer.classList.add('active');
-  }, 500);
+  // Instantly hide the flower/bunny image (no fade)
+  imageContent.style.display = 'none';
+  envelopeContainer.classList.add('active');
   
   let frameIndex = 0;
   
@@ -97,7 +93,7 @@ function playEnvelopeAnimation() {
     
     // Continue animation until we reach the last frame
     if (frameIndex < envelopeFrames.length) {
-      setTimeout(showFrame, 150); // Adjust timing (ms) between frames as needed
+      setTimeout(showFrame, 500); // Change frame every 0.5 seconds (500ms)
     } else {
       // Freeze on last frame when animation is complete
       isEnvelopeOpen = false; // Animation complete, stamp is now clickable

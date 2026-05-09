@@ -23,23 +23,46 @@
     <header>
       <!-- CUSTOMIZE: Change the header text -->
       <h1>For you &lt;3</h1>
-      
-      <div class="shrink-close-icons">
-        <!-- CUSTOMIZE: Update icon paths/filenames as needed -->
-        <img src="./assets/shrink-icon.png" alt="Shrink Icon" class="shrink-icon" />
-        <img src="./assets/close-icon.png" alt="Close Icon" class="shrink-icon" />
-      </div> 
     </header>
     
     <div class="inner-container">
       <!-- The image is loaded via CSS from the --image-path-content variable -->
       <div class="image-content"></div>
       
+      <!-- Envelope animation container (appears after final image) -->
+      <div class="envelope-container">
+        <div class="envelope-animation"></div>
+        <div class="stamp"></div>
+      </div>
+      
       <!-- CUSTOMIZE: Change the button text -->
       <button id="main-button">Grow!</button>
       
       <!-- CUSTOMIZE: Change the final message text -->
       <div class="final-message">Have a good day!</div>
+    </div>
+  </div>
+
+  <!-- Letter Pop-up Modal -->
+  <div class="letter-modal" id="letterModal">
+    <div class="letter-popup">
+      <div class="letter-header">
+        <button class="letter-close-btn" id="letterCloseBtn">
+          <img src="./assets/close-icon.png" alt="Close Letter" />
+        </button>
+      </div>
+      <div class="letter-content" id="letterContent">
+        <!-- CUSTOMIZE: Add your letter text here -->
+        <p>Dear recipient,</p>
+        <p>This is a placeholder letter. You can customize this text by editing the letterContent div in the HTML.</p>
+        <p>Add as much text as you'd like - it will automatically scroll if needed!</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+        <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <p>More placeholder text to ensure scrolling capability.</p>
+        <p>Keep adding content until you're satisfied with how the scrollbar looks!</p>
+      </div>
     </div>
   </div>
 

@@ -9,6 +9,8 @@
     --color-heading-text: #FFF;
     --color-button-text: #9E0E2B;
     --color-message-text: #9E0E2B;
+    --color-paper: #d9f1f6;
+    --color-letter-text: #9E0E2B;
     
     /* Images */
     --image-path-background: url('assets/main-bg.png');
@@ -98,22 +100,6 @@
     padding: 0;
   }
   
-  /* Shrink Close Icons */
-  .shrink-close-icons {
-    display: flex;
-    align-items: center;
-    gap: var(--gap-icons);
-  }
-  
-  /* Icons */
-  .shrink-icon {
-    width: 24px;
-    height: 24px;
-    object-fit: cover;
-    border-radius: 2px;
-    opacity: 1;
-    transition: opacity 0.2s ease-in-out;
-  }
   
   /* Image Content */
   .image-content {
@@ -166,6 +152,166 @@
     font-weight: 400;
     line-height: normal;
     margin-top: 4px;
+  }
+
+  /* =============================================
+     LETTER FEATURE STYLES
+     ============================================= */
+  
+  /* Envelope Animation Container */
+  .envelope-container {
+    display: none;
+    position: relative;
+    height: 65%;
+    aspect-ratio: 142.5 / 171;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  .envelope-container.active {
+    display: flex;
+  }
+
+  /* Envelope Animation Frames */
+  .envelope-animation {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  /* Stamp (clickable area on the envelope) */
+  .stamp {
+    position: absolute;
+    top: 15%;
+    right: 15%;
+    width: 80px;
+    height: 80px;
+    cursor: pointer;
+    z-index: 10;
+  }
+
+  /* Letter Pop-up Modal */
+  .letter-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+
+  .letter-modal.active {
+    display: flex;
+    opacity: 1;
+  }
+
+  /* Letter Pop-up Content */
+  .letter-popup {
+    position: relative;
+    width: 800px;
+    max-width: 90vw;
+    aspect-ratio: 420 / 330;
+    border: var(--border-width-main) solid var(--color-border);
+    background: var(--color-paper);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Letter Header with Close Button */
+  .letter-header {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: var(--padding-container);
+    background: var(--color-paper);
+  }
+
+  .letter-close-btn {
+    width: 24px;
+    height: 24px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .letter-close-btn img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Letter Content Area with Scrollbar */
+  .letter-content {
+    flex: 1;
+    padding: 1.5rem;
+    overflow-y: auto;
+    color: var(--color-letter-text);
+    font-family: var(--font-family-main);
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  /* Custom Scrollbar Styling */
+  .letter-content::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .letter-content::-webkit-scrollbar-track {
+    background: rgba(158, 14, 43, 0.1);
+  }
+
+  .letter-content::-webkit-scrollbar-thumb {
+    background: var(--color-letter-text);
+    border-radius: 4px;
+  }
+
+  .letter-content::-webkit-scrollbar-thumb:hover {
+    background: rgba(158, 14, 43, 0.8);
+  }
+
+  /* Fade In/Out Animation for Container and Letter */
+  .fade-out {
+    animation: fadeOut 0.5s ease forwards;
+  }
+
+  .fade-in {
+    animation: fadeIn 0.5s ease forwards;
+  }
+
+  @keyframes fadeOut {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
   }
   
   /* Responsive Styles for Mobile */

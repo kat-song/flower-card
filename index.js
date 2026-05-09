@@ -20,11 +20,31 @@ const imageContent = document.querySelector('.image-content');  // Image contain
 const mainButton = document.getElementById('main-button');      // Image switch button
 const finalMessage = document.querySelector('.final-message');  // Final message
 
+// Letter feature elements
+const envelopeContainer = document.querySelector('.envelope-container');  // Envelope container
+const envelopeAnimation = document.querySelector('.envelope-animation'); // Envelope animation
+const stamp = document.querySelector('.stamp');                          // Stamp (clickable)
+const letterModal = document.getElementById('letterModal');              // Letter modal
+const letterCloseBtn = document.getElementById('letterCloseBtn');        // Letter close button
+const innerContainer = document.querySelector('.inner-container');       // Inner container for fade effect
+
 // =============================================
 // STEP 3: Track what image we're at 
 // =============================================
 // Start with the first image (index 0)
 let currentIndex = 0;
+
+// Envelope animation frames
+const envelopeFrames = [
+  './assets/envelope_animation/envelope animation0.png',
+  './assets/envelope_animation/envelope animation1.png',
+  './assets/envelope_animation/envelope animation2.png',
+  './assets/envelope_animation/envelope animation3.png',
+  './assets/envelope_animation/envelope animation4.png',
+  './assets/envelope_animation/envelope animation5.png'
+];
+
+let isEnvelopeOpen = false;
 
 // =============================================
 // STEP 4: Update image function 
@@ -55,7 +75,77 @@ function updateImage() {
 updateImage();
 
 // =============================================
-// STEP 6: Button click handler 
+// STEP 6: Envelope Animation Function
+// =============================================
+// Play envelope animation after final image
+function playEnvelopeAnimation() {
+  // Fade out the flower/bunny image
+  imageContent.style.opacity = 0;
+  
+  // After fade out, hide image and show envelope
+  setTimeout(() => {
+    imageContent.style.display = 'none';
+    envelopeContainer.classList.add('active');
+  }, 500);
+  
+  let frameIndex = 0;
+  
+  // Function to display each frame
+  function showFrame() {
+    envelopeAnimation.style.backgroundImage = `url('${envelopeFrames[frameIndex]}')`;
+    frameIndex++;
+    
+    // Continue animation until we reach the last frame
+    if (frameIndex < envelopeFrames.length) {
+      setTimeout(showFrame, 150); // Adjust timing (ms) between frames as needed
+    } else {
+      // Freeze on last frame when animation is complete
+      isEnvelopeOpen = false; // Animation complete, stamp is now clickable
+    }
+  }
+  
+  showFrame();
+}
+
+// =============================================
+// STEP 7: Stamp Click Handler (opens letter)
+// =============================================
+stamp.addEventListener('click', () => {
+  // Fade out the entire inner container
+  innerContainer.classList.add('fade-out');
+  
+  // After fade out, show the letter modal
+  setTimeout(() => {
+    innerContainer.style.display = 'none';
+    letterModal.classList.add('active');
+  }, 500);
+});
+
+// =============================================
+// STEP 8: Letter Close Button Handler
+// =============================================
+letterCloseBtn.addEventListener('click', () => {
+  // Fade out letter modal
+  letterModal.classList.remove('active');
+  
+  // After fade out, show the inner container again
+  setTimeout(() => {
+    innerContainer.style.display = 'flex';
+    innerContainer.classList.remove('fade-out');
+    // Show the envelope again after closing letter
+    imageContent.style.display = 'none';
+  }, 500);
+});
+
+// Close letter when clicking outside the modal content
+letterModal.addEventListener('click', (event) => {
+  if (event.target === letterModal) {
+    letterCloseBtn.click();
+  }
+});
+
+// =============================================
+// STEP 9: Button click handler 
 // =============================================
 // Change image when button is clicked
 mainButton.addEventListener('click', () => {
@@ -67,9 +157,10 @@ mainButton.addEventListener('click', () => {
     updateImage();
   }
   
-  // Once at the last image, show the final message and hide the button 
+  // Once at the last image, show the envelope animation and hide the button 
   if (currentIndex === images.length - 1) {
     mainButton.style.display = 'none';
-    finalMessage.style.display = 'block';
+    finalMessage.style.display = 'none';
+    playEnvelopeAnimation();
   }
 });

@@ -21,10 +21,17 @@ This project creates a stylized pop-up window that displays a series of images. 
 
 ## To do:
 * change background pic
-* change flower 
-* add letter: on the last click, an envelope appears with a red stamp, and when you click on it it unseals and a paper half appears sticking out of it. When you click the paper a pop-up window (not an actual pop up but just the visual effect) with a scroll bar appears, and lets you read the text of the letter. 
+* change flower and bunny 
+* clean up animation (rn it flashes and it's too fast)
 * update background w pics of mom in a pixelated frame every click also 
 * turn cursor into a butterfly 
+* make mothers day themed (change the for you part)
+* Implement a restart button after reaching the final image (draw a restart button)
+* Add sound effects for button clicks and transitions
+
+done: 
+* add letter: on the last click, an envelope appears with a red stamp, and when you click on it it unseals and a paper half appears sticking out of it. When you click the paper a pop-up window (not an actual pop up but just the visual effect) with a scroll bar appears, and lets you read the text of the letter. 
+* made butterfly cursor 
 
 ## 📁 Project Structure
 
@@ -157,36 +164,4 @@ const images = [
   // Add more images here...
 ];
 ```
-
-## 🌐 Hosting on Netlify
-
-You can deploy this project using Netlify's free plan:
-
-**Prepare your project**:
-* Make sure your files are named correctly: `index.html` and `index.js` (if you renamed them)
-* Ensure all file paths are correct (case-sensitive)
-
-**Sign up for Netlify**:
-* Go to netlify.com and sign up for a free account
-* You can sign up using GitHub, GitLab, Bitbucket, or email
-
-**Deploy your site**: 
-* Simply drag and drop your project folder onto the Netlify dashboard
-* Netlify will automatically deploy your site
-
-**Configure your site**:
-* After deployment, you can customize your site name
-* Go to "Site settings" → "Change site name"
-* Your site will be available at `your-site-name.netlify.app`
-
-**Update your site**:
-* If you used the drag and drop method, simply drag and drop your folder again
-* If you connected to Git, just push changes to your repository
-
-
-## Project Extension Ideas
-
-- Add click functionality to the close and shrink icons
-- Implement a restart button after reaching the final image
-- Add sound effects for button clicks and transitions
 

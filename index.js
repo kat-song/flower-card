@@ -28,6 +28,8 @@ const letterModal = document.getElementById('letterModal');              // Lett
 const letterCloseBtn = document.getElementById('letterCloseBtn');        // Letter close button
 const innerContainer = document.querySelector('.inner-container');       // Inner container for fade effect
 const restartBtn = document.getElementById('restart-btn');               // Restart button
+const replayScreen = document.getElementById('replayScreen');            // Replay screen
+const replayBtn = document.getElementById('replayBtn');                  // Replay button
 
 // =============================================
 // STEP 3: Track what image we're at 
@@ -137,12 +139,18 @@ letterCloseBtn.addEventListener('click', () => {
   // Fade out letter modal
   letterModal.classList.remove('active');
   
-  // After fade out, show the inner container again
+  // After fade out, show the replay screen
   setTimeout(() => {
-    innerContainer.style.display = 'flex';
-    innerContainer.classList.remove('fade-out');
-    // Show the envelope again after closing letter
-    imageContent.style.display = 'none';
+    replayScreen.classList.add('active');
+    // Initialize background position to center when replay screen becomes active
+    requestAnimationFrame(() => {
+      const dims = getBackgroundDimensions();
+      const screenWidth = replayScreen.offsetWidth;
+      const screenHeight = replayScreen.offsetHeight;
+      backgroundPosX = Math.max(0, (dims.width - screenWidth) / 2);
+      backgroundPosY = Math.max(0, (dims.height - screenHeight) / 2);
+      updateBackgroundPosition();
+    });
   }, 500);
 });
 
@@ -178,7 +186,7 @@ mainButton.addEventListener('click', () => {
 // STEP 10: Restart button handler
 // =============================================
 // Restart the entire animation sequence
-restartBtn.addEventListener('click', () => {
+function restartSequence() {
   // Reset image index
   currentIndex = 0;
   
@@ -201,4 +209,145 @@ restartBtn.addEventListener('click', () => {
   letterModal.style.display = '';
   innerContainer.style.display = 'flex';
   innerContainer.classList.remove('fade-out');
+  
+  // Hide replay screen and reset background position
+  replayScreen.classList.remove('active');
+  backgroundPosX = 0;
+  backgroundPosY = 0;
+}
+
+restartBtn.addEventListener('click', restartSequence);
+
+// =============================================
+// STEP 11: Replay button handler (shown after letter)
+// =============================================
+replayBtn.addEventListener('click', restartSequence);
+
+// =============================================
+// STEP 12: Replay Screen Panning and Scrolling
+// =============================================
+let isPanning = false;
+let panStartX = 0;
+let panStartY = 0;
+let backgroundPosX = 0;
+let backgroundPosY = 0;
+const imageAspectRatio = 1920 / 1080; // Background image aspect ratio
+
+// Function to calculate actual background dimensions with cover sizing
+function getBackgroundDimensions() {
+  const screenWidth = replayScreen.offsetWidth;
+  const screenHeight = replayScreen.offsetHeight;
+  const screenAspectRatio = screenWidth / screenHeight;
+  
+  let bgWidth, bgHeight;
+  
+  // With background-size: cover, the image must cover the entire viewport
+  if (screenAspectRatio > imageAspectRatio) {
+    // Screen is wider than image - scale to match width
+    bgWidth = screenWidth;
+    bgHeight = bgWidth / imageAspectRatio;
+  } else {
+    // Screen is narrower (taller) than image - scale to match height
+    bgHeight = screenHeight;
+    bgWidth = bgHeight * imageAspectRatio;
+  }
+  
+  return { width: bgWidth, height: bgHeight };
+}
+
+// Function to check if panning should be enabled
+function canPan() {
+  const dims = getBackgroundDimensions();
+  const screenWidth = replayScreen.offsetWidth;
+  const screenHeight = replayScreen.offsetHeight;
+  return dims.width > screenWidth || dims.height > screenHeight;
+}
+
+// Function to update scroll position and apply clamps
+function updateBackgroundPosition() {
+  const dims = getBackgroundDimensions();
+  const screenWidth = replayScreen.offsetWidth;
+  const screenHeight = replayScreen.offsetHeight;
+  
+  // Calculate how much extra space the background takes up
+  const maxOffsetX = Math.max(0, dims.width - screenWidth);
+  const maxOffsetY = Math.max(0, dims.height - screenHeight);
+  
+  // Clamp position
+  backgroundPosX = Math.max(0, Math.min(backgroundPosX, maxOffsetX));
+  backgroundPosY = Math.max(0, Math.min(backgroundPosY, maxOffsetY));
+  
+  replayScreen.style.backgroundPosition = `${-backgroundPosX}px ${-backgroundPosY}px`;
+}
+
+// Mouse down - start panning
+document.addEventListener('mousedown', (e) => {
+  // Only pan if mousedown happened on replay screen
+  if (!replayScreen.classList.contains('active')) {
+    return;
+  }
+  
+  // Don't start panning if clicking the replay button itself
+  if (e.target === replayBtn || replayBtn.contains(e.target)) {
+    return;
+  }
+  
+  // Check if click was actually on the replay screen
+  const rect = replayScreen.getBoundingClientRect();
+  if (e.clientX < rect.left || e.clientX > rect.right || e.clientY < rect.top || e.clientY > rect.bottom) {
+    return;
+  }
+  
+  isPanning = true;
+  panStartX = e.clientX;
+  panStartY = e.clientY;
+  replayScreen.style.cursor = 'grabbing';
 });
+
+// Mouse move - pan the view
+document.addEventListener('mousemove', (e) => {
+  if (!isPanning) return;
+  
+  const deltaX = e.clientX - panStartX;
+  const deltaY = e.clientY - panStartY;
+  
+  backgroundPosX -= deltaX;
+  backgroundPosY -= deltaY;
+  
+  updateBackgroundPosition();
+  
+  panStartX = e.clientX;
+  panStartY = e.clientY;
+});
+
+// Mouse up - stop panning
+document.addEventListener('mouseup', () => {
+  isPanning = false;
+  replayScreen.style.cursor = '';
+});
+
+// Scroll wheel - pan the view
+document.addEventListener('wheel', (e) => {
+  if (!replayScreen.classList.contains('active')) return;
+  
+  // Check if scroll was over the replay screen
+  const rect = replayScreen.getBoundingClientRect();
+  if (e.clientX < rect.left || e.clientX > rect.right || e.clientY < rect.top || e.clientY > rect.bottom) {
+    return;
+  }
+  
+  e.preventDefault();
+  const scrollDelta = 30;
+  
+  // Vertical scroll
+  backgroundPosY += e.deltaY > 0 ? scrollDelta : -scrollDelta;
+  
+  // Horizontal scroll (if shift key is pressed)
+  if (e.shiftKey) {
+    backgroundPosX += e.deltaX > 0 ? scrollDelta : -scrollDelta;
+  } else {
+    backgroundPosX += e.deltaX * 0.5;
+  }
+  
+  updateBackgroundPosition();
+}, { passive: false });

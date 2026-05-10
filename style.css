@@ -13,7 +13,7 @@
     --color-letter-text: #9E0E2B;
     
     /* Images */
-    --image-path-background: url('assets/main-bg.png');
+    --image-path-background: url('assets/background1.png');
     --image-path-content: url('assets/image-content/image-1.png');
     
     /* Fonts */
@@ -42,8 +42,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background: var(--color-page-background) var(--image-path-background) bottom center no-repeat;
-    background-size: 100% auto; /* Desktop view */
+    background: var(--image-path-background) center center no-repeat;
+    background-size: cover;
     cursor: url('assets/butterfly.png'), auto;
   }
   
@@ -340,6 +340,55 @@
     }
   }
   
+  /* Replay Screen (shown after letter is closed) */
+  .replay-screen {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--image-path-background) center center no-repeat;
+    background-size: cover;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+
+  .replay-screen.active {
+    display: flex;
+    opacity: 1;
+  }
+
+  /* Replay Button */
+  .replay-btn {
+    width: 80px;
+    height: 80px;
+    background: none;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: url('assets/butterfly.png'), auto;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.2s ease;
+    position: relative;
+    z-index: 10;
+  }
+
+  .replay-btn:hover {
+    transform: scale(1.1);
+  }
+
+  .replay-btn img {
+    width: 60%;
+    height: 60%;
+    object-fit: contain;
+  }
+
   /* Responsive Styles for Mobile */
   @media (max-width: 768px) {
     body {

@@ -27,6 +27,7 @@ const stamp = document.querySelector('.stamp');                          // Stam
 const letterModal = document.getElementById('letterModal');              // Letter modal
 const letterCloseBtn = document.getElementById('letterCloseBtn');        // Letter close button
 const innerContainer = document.querySelector('.inner-container');       // Inner container for fade effect
+const restartBtn = document.getElementById('restart-btn');               // Restart button
 
 // =============================================
 // STEP 3: Track what image we're at 
@@ -83,6 +84,16 @@ function playEnvelopeAnimation() {
   // Instantly hide the flower/bunny image (no fade)
   imageContent.style.display = 'none';
   envelopeContainer.classList.add('active');
+  
+  // Preload all envelope frames
+  let loadedFrames = 0;
+  envelopeFrames.forEach((frameSrc) => {
+    const img = new Image();
+    img.onload = () => {
+      loadedFrames++;
+    };
+    img.src = frameSrc;
+  });
   
   let frameIndex = 0;
   
@@ -159,4 +170,32 @@ mainButton.addEventListener('click', () => {
     finalMessage.style.display = 'none';
     playEnvelopeAnimation();
   }
+});
+
+// =============================================
+// STEP 10: Restart button handler
+// =============================================
+// Restart the entire animation sequence
+restartBtn.addEventListener('click', () => {
+  // Reset image index
+  currentIndex = 0;
+  
+  // Reset and show image content
+  imageContent.style.display = 'flex';
+  imageContent.style.opacity = 1;
+  updateImage();
+  
+  // Hide envelope container and reset flag
+  envelopeContainer.classList.remove('active');
+  isEnvelopeOpen = false;
+  
+  // Show button and hide final message
+  mainButton.style.display = 'flex';
+  finalMessage.style.display = 'none';
+  
+  // Hide letter modal if open
+  letterModal.classList.remove('active');
+  letterModal.style.display = '';
+  innerContainer.style.display = 'flex';
+  innerContainer.classList.remove('fade-out');
 });

@@ -44,6 +44,7 @@
     align-items: center;
     background: var(--color-page-background) var(--image-path-background) bottom center no-repeat;
     background-size: 100% auto; /* Desktop view */
+    cursor: url('assets/butterfly.png'), auto;
   }
   
   h1 { 
@@ -99,6 +100,29 @@
     margin: 0;
     padding: 0;
   }
+
+  /* Header buttons (restart, etc.) */
+  .header-btn {
+    width: 40px;
+    height: 40px;
+    background: none;
+    border: none;
+    cursor: url('assets/butterfly.png'), auto;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .header-btn img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .header-spacer {
+    width: 40px;
+  }
   
   
   /* Image Content */
@@ -136,6 +160,7 @@
     font-style: normal;
     line-height: normal;
     transition: transform 0.2s ease;
+    cursor: url('assets/butterfly.png'), auto;
   }
   
   #main-button:hover {
@@ -166,7 +191,7 @@
     aspect-ratio: 142.5 / 171;
     justify-content: center;
     align-items: center;
-    cursor: pointer;
+    cursor: url('assets/butterfly.png'), auto;
   }
 
   .envelope-container.active {
@@ -241,11 +266,11 @@
   }
 
   .letter-close-btn {
-    width: 24px;
-    height: 24px;
+    width: 50px;
+    height: 50px;
     background: none;
     border: none;
-    cursor: pointer;
+    cursor: url('assets/butterfly.png'), auto;
     padding: 0;
     display: flex;
     justify-content: center;

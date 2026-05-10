@@ -107,6 +107,8 @@ function playEnvelopeAnimation() {
       setTimeout(showFrame, 500); // Change frame every 0.5 seconds (500ms)
     } else {
       // Freeze on last frame when animation is complete
+      // Enable clicking on the envelope now that animation is done
+      stamp.style.pointerEvents = 'auto';
       isEnvelopeOpen = false; // Animation complete, stamp is now clickable
     }
   }
@@ -188,6 +190,7 @@ restartBtn.addEventListener('click', () => {
   // Hide envelope container and reset flag
   envelopeContainer.classList.remove('active');
   isEnvelopeOpen = false;
+  stamp.style.pointerEvents = 'none';
   
   // Show button and hide final message
   mainButton.style.display = 'flex';
